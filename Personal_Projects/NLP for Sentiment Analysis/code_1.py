@@ -11,13 +11,18 @@ def load_data(data_dir):
     labels = []
     for label in ['pos', 'neg']:
         folder = os.path.join(data_dir, label)
-        for filename in os.listdir(folder):
-            with open(os.path.join(folder, filename), 'r', encoding='utf-8') as file:
-                texts.append(file.read())
-                labels.append(label)
+        
+        # Check if the folder exists
+        if os.path.exists(folder) and os.path.isdir(folder):
+            for filename in os.listdir(folder):
+                with open(os.path.join(folder, filename), 'r', encoding='utf-8') as file:
+                    texts.append(file.read())
+                    labels.append(label)
+    
     return pd.DataFrame({'text': texts, 'label': labels})
 
-data_dir = 'Users/lekhmac/Downloads/aclImdb/train'  # Change to the path where your dataset is located
+
+data_dir = '/Users/lekhmac/Documents/GitHub/Coding/Personal_Projects/NLP for Sentiment Analysis/aclImdb'  # Change to the path where your dataset is located
 df_train = load_data(data_dir)
 
 # Step 2: Preprocess Data
